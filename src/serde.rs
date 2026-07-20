@@ -14,15 +14,7 @@ where
     fn serialize<S>(&self, s: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
-    {
-        use serde::ser::SerializeMap;
-        let mut map = s.serialize_map(Some(self.len()))?;
-        //let mut map = s.serialize_map(None)?;
-        for (k, v) in self.iter() {
-            map.serialize_entry(&k, &v)?;
-        }
-        map.end()
-    }
+    { panic!("STUB: not implemented") }
 }
 
 struct ConcurrentMapVisitor<K, V, const FANOUT: usize, const LOCAL_GC_BUFFER_SIZE: usize> {
@@ -37,22 +29,12 @@ where
 {
     type Value = ConcurrentMap<K, V, FANOUT, LOCAL_GC_BUFFER_SIZE>;
 
-    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-        formatter.write_str("a StackMap<IVec, IVec, 1024>")
-    }
+    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result { panic!("STUB: not implemented") }
 
     fn visit_map<M>(self, mut access: M) -> Result<Self::Value, M::Error>
     where
         M: MapAccess<'de>,
-    {
-        let map = ConcurrentMap::default();
-
-        while let Some((key, value)) = access.next_entry()? {
-            map.insert(key, value);
-        }
-
-        Ok(map)
-    }
+    { panic!("STUB: not implemented") }
 }
 
 impl<'de, K, V, const FANOUT: usize, const LOCAL_GC_BUFFER_SIZE: usize> Deserialize<'de>
@@ -64,7 +46,5 @@ where
     fn deserialize<D>(d: D) -> Result<ConcurrentMap<K, V, FANOUT, LOCAL_GC_BUFFER_SIZE>, D::Error>
     where
         D: Deserializer<'de>,
-    {
-        d.deserialize_map(ConcurrentMapVisitor { pd: PhantomData })
-    }
+    { panic!("STUB: not implemented") }
 }
